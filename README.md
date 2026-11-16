@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/qatra-banner.svg" alt="Qatra - every drop saves a life" width="100%">
+ <img src="qatra-banner.svg" alt="Qatra - every drop saves a life" width="100%">
 </p>
 
 <p align="center">
