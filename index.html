@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qatra — Pakistan Blood Network</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:#C8102E; --red-dark:#8B0A1F; --red-light:#FDEEF1; --red-mid:#E8314A;
+  --cream:#FBF8F4; --ink:#1A1008; --ink-mid:#3D2B1F; --muted:#8A7A72;
+  --border:rgba(200,16,46,0.15); --white:#fff;
+  --success:#0D7A4E; --success-bg:#E8F5EE; --warning:#B45309; --warning-bg:#FEF3C7;
+  --bg:var(--cream); --card:#fff; --card-border:#F0E8E0;
+  --nav-bg:rgba(251,248,244,0.95); --text:var(--ink); --text-mid:var(--ink-mid);
+  --sidebar-bg:#fff; --table-row:#FDFAF7; --input-bg:var(--cream);
+}
+[data-theme="dark"] {
+  --bg:#0F0A08; --card:#1C1410; --card-border:#2E2018;
+  --nav-bg:rgba(15,10,8,0.95); --text:#F5EDE6; --text-mid:#C4A99A;
+  --muted:#7A6A62; --cream:#0F0A08; --ink-mid:#C4A99A;
+  --sidebar-bg:#1C1410; --table-row:#211810; --input-bg:#2A1E16;
+  --card-border:#2E2018; --red-light:rgba(200,16,46,0.15);
+  --success-bg:rgba(13,122,78,0.15); --warning-bg:rgba(180,83,9,0.15);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden;transition:background 0.3s,color 0.3s}
+[data-lang="ur"] body,[data-lang="ur"] h1,[data-lang="ur"] h2,[data-lang="ur"] p,[data-lang="ur"] a,[data-lang="ur"] button,[data-lang="ur"] label,[data-lang="ur"] td,[data-lang="ur"] th{font-family:'Noto Nastaliq Urdu',serif;direction:rtl}
+[data-lang="ur"] nav,[data-lang="ur"] .search-box,[data-lang="ur"] .admin-wrap{direction:rtl}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;transition:background 0.3s}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--red);text-decoration:none;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px}
+.nav-links{display:flex;align-items:center;gap:0.25rem}
+.nav-links a{font-size:0.875rem;font-weight:500;color:var(--text-mid);text-decoration:none;padding:6px 12px;border-radius:8px;transition:all 0.2s;cursor:pointer}
+.nav-links a:hover{background:var(--red-light);color:var(--red)}
+.nav-links a.active{color:var(--red)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.icon-btn{background:var(--card);border:1px solid var(--card-border);border-radius:10px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:all 0.2s;color:var(--text)}
+.icon-btn:hover{border-color:var(--red);color:var(--red)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:10px;font-weight:600;font-size:0.875rem;cursor:pointer;border:none;text-decoration:none;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--red);color:white}
+.btn-primary:hover{background:var(--red-dark);transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,16,46,0.35)}
+.btn-outline{background:transparent;color:var(--red);border:1.5px solid var(--red)}
+.btn-outline:hover{background:var(--red-light)}
+.btn-lg{padding:14px 28px;font-size:1rem;border-radius:12px}
+.btn-sm{padding:7px 14px;font-size:0.8rem;border-radius:8px}
+
+/* PAGES */
+.page{display:none;animation:fadeIn 0.35s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;background:var(--ink);color:white;padding:6rem 2rem 5rem;text-align:center;min-height:85vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(200,16,46,0.45) 0%,transparent 70%);pointer-events:none}
+.hero-orb{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(200,16,46,0.08),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation:orbPulse 4s ease-in-out infinite}
+@keyframes orbPulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.1)}}
+.hero-pattern{position:absolute;inset:0;opacity:0.03;background-image:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(255,255,255,0.5) 40px,rgba(255,255,255,0.5) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(255,255,255,0.5) 40px,rgba(255,255,255,0.5) 41px)}
+.floating-drops{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.drop{position:absolute;font-size:1.5rem;animation:floatDrop linear infinite;opacity:0.15}
+@keyframes floatDrop{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:0.15}90%{opacity:0.15}100%{transform:translateY(-100px) rotate(360deg);opacity:0}}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(200,16,46,0.2);border:1px solid rgba(200,16,46,0.4);color:#FF8095;padding:6px 14px;border-radius:20px;font-size:0.8rem;font-weight:600;letter-spacing:0.04em;margin-bottom:2rem;position:relative;animation:slideDown 0.6s ease 0.2s both}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.pulse-dot{width:7px;height:7px;border-radius:50%;background:var(--red-mid);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(1.3)}}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,5.5rem);font-weight:900;line-height:1.05;letter-spacing:-0.03em;position:relative;margin-bottom:1.25rem;animation:slideUp 0.7s ease 0.3s both}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero h1 em{color:var(--red-mid);font-style:normal;position:relative}
+.hero h1 em::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:3px;background:var(--red-mid);border-radius:2px;animation:lineGrow 0.8s ease 1s both}
+@keyframes lineGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.hero p{font-size:1.15rem;color:rgba(255,255,255,0.7);max-width:540px;margin:0 auto 2.5rem;font-weight:300;animation:slideUp 0.7s ease 0.45s both}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;animation:slideUp 0.7s ease 0.6s both}
+.stats-bar{display:flex;gap:0;border-top:1px solid rgba(255,255,255,0.1);margin-top:4rem;padding-top:2.5rem;position:relative;width:100%;max-width:700px;justify-content:center;animation:slideUp 0.7s ease 0.75s both}
+.stat-item{flex:1;text-align:center;padding:0 1.5rem;border-right:1px solid rgba(255,255,255,0.1)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:white;line-height:1}
+.stat-lbl{font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:4px;font-weight:400;text-transform:uppercase;letter-spacing:0.06em}
+
+/* SECTIONS */
+.section{padding:4rem 2rem;max-width:960px;margin:0 auto}
+.section-tag{font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:0.5rem}
+.section-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);line-height:1.2}
+
+/* SEARCH BOX */
+.search-box{background:var(--card);border-radius:16px;border:1px solid var(--card-border);padding:1.5rem;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end;box-shadow:0 4px 24px rgba(200,16,46,0.08)}
+.form-group{display:flex;flex-direction:column}
+.form-group label{display:block;font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.form-group select,.form-group input{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--card-border);background:var(--input-bg);font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--text);outline:none;transition:border-color 0.2s;appearance:none;-webkit-appearance:none}
+.form-group select:focus,.form-group input:focus{border-color:var(--red)}
+textarea{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--card-border);background:var(--input-bg);font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--text);outline:none;resize:vertical;min-height:80px;transition:border-color 0.2s}
+textarea:focus{border-color:var(--red)}
+
+/* CARDS */
+.donors-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:1.5rem}
+.donor-card{background:var(--card);border-radius:16px;border:1px solid var(--card-border);padding:1.25rem;transition:all 0.25s;cursor:pointer;position:relative;overflow:hidden}
+.donor-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--red-mid));transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
+.donor-card:hover::before{transform:scaleX(1)}
+.donor-card:hover{box-shadow:0 12px 40px rgba(200,16,46,0.15);border-color:rgba(200,16,46,0.3);transform:translateY(-4px)}
+.donor-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem}
+.donor-avatar{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;color:white;background:linear-gradient(135deg,var(--red),var(--red-mid));font-family:'Playfair Display',serif;box-shadow:0 4px 12px rgba(200,16,46,0.3)}
+.blood-badge{font-size:0.7rem;font-weight:700;padding:4px 10px;border-radius:20px;background:var(--red-light);color:var(--red);border:1px solid rgba(200,16,46,0.2)}
+.donor-name{font-weight:600;font-size:0.95rem;color:var(--text);margin-bottom:2px}
+.donor-meta{font-size:0.8rem;color:var(--muted);display:flex;align-items:center;gap:4px}
+.status-dot{width:6px;height:6px;border-radius:50%}
+.status-dot.avail{background:var(--success);box-shadow:0 0 0 2px rgba(13,122,78,0.2)}
+.status-dot.unavail{background:#ccc}
+.donor-detail{display:flex;flex-direction:column;gap:5px;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--card-border)}
+.donor-detail-row{display:flex;justify-content:space-between;font-size:0.8rem}
+.donor-detail-row span:first-child{color:var(--muted)}
+.donor-detail-row span:last-child{font-weight:500;color:var(--text)}
+.donor-actions{display:flex;gap:8px;margin-top:1rem}
+
+/* LEADERBOARD */
+.leaderboard{padding:3rem 2rem;background:var(--card);border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border)}
+.lb-inner{max-width:960px;margin:0 auto}
+.lb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:1.5rem}
+.lb-card{background:var(--bg);border-radius:14px;border:1px solid var(--card-border);padding:1rem;display:flex;align-items:center;gap:12px;transition:all 0.2s;position:relative;overflow:hidden}
+.lb-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.1)}
+.lb-rank{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;width:36px;text-align:center;flex-shrink:0}
+.rank-1{color:#F59E0B}
+.rank-2{color:#94A3B8}
+.rank-3{color:#CD7C2F}
+.lb-info{flex:1;min-width:0}
+.lb-name{font-weight:600;font-size:0.9rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-city{font-size:0.75rem;color:var(--muted)}
+.lb-donations{font-size:0.8rem;font-weight:700;color:var(--red);white-space:nowrap}
+.badge-row{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
+.badge{font-size:0.65rem;padding:2px 6px;border-radius:20px;font-weight:700}
+.badge-gold{background:#FEF3C7;color:#92400E}
+.badge-red{background:var(--red-light);color:var(--red-dark)}
+.badge-green{background:var(--success-bg);color:var(--success)}
+.badge-blue{background:#EFF6FF;color:#1D4ED8}
+
+/* BLOOD COMPAT */
+.compat-section{padding:3rem 2rem;max-width:960px;margin:0 auto}
+.compat-table-wrap{overflow-x:auto;margin-top:1.5rem;border-radius:16px;border:1px solid var(--card-border);background:var(--card)}
+.compat-table{width:100%;border-collapse:collapse;font-size:0.85rem}
+.compat-table th{padding:10px 14px;font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);background:var(--bg);border-bottom:1px solid var(--card-border)}
+.compat-table td{padding:10px 14px;border-bottom:1px solid var(--card-border);text-align:center}
+.compat-table tr:last-child td{border-bottom:none}
+.compat-table tr:hover td{background:var(--table-row)}
+.compat-table .bg-lbl{font-weight:700;color:var(--red);font-family:'Playfair Display',serif;font-size:1rem;text-align:left}
+.compat-yes{color:var(--success);font-size:1.1rem}
+.compat-no{color:#ccc;font-size:1rem}
+
+/* CAMPS */
+.camp-card{background:var(--card);border-radius:14px;border:1px solid var(--card-border);padding:1.25rem;transition:all 0.2s;position:relative;overflow:hidden}
+.camp-card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.1)}
+.camp-header{display:flex;align-items:center;gap:10px;margin-bottom:0.75rem}
+.camp-icon{width:44px;height:44px;border-radius:10px;background:var(--red-light);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.camp-org{font-weight:600;font-size:0.95rem;color:var(--text)}
+.camp-date{font-size:0.8rem;color:var(--red);font-weight:600}
+.camp-loc{font-size:0.8rem;color:var(--muted);margin-top:3px}
+.camp-tag{font-size:0.7rem;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--success-bg);color:var(--success);display:inline-block;margin-top:8px}
+
+/* REQUESTS */
+.urgent-section{padding:3rem 2rem;background:var(--card);border-top:1px solid var(--card-border)}
+.urgent-inner{max-width:960px;margin:0 auto}
+.urgent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:1.5rem}
+.request-card{border-radius:14px;border:1px solid;padding:1.25rem;transition:all 0.2s;cursor:pointer}
+.request-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.1)}
+.request-card.urgent{background:rgba(200,16,46,0.04);border-color:rgba(200,16,46,0.25)}
+.request-card.normal{background:var(--bg);border-color:var(--card-border)}
+.req-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem}
+.req-blood{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--red)}
+.req-tag{font-size:0.7rem;font-weight:700;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:0.04em}
+.tag-urgent{background:var(--red);color:white;animation:tagPulse 2s ease-in-out infinite}
+@keyframes tagPulse{0%,100%{opacity:1}50%{opacity:0.7}}
+.tag-normal{background:var(--card-border);color:var(--muted)}
+.req-title{font-weight:600;font-size:0.95rem;color:var(--text)}
+.req-sub{font-size:0.8rem;color:var(--muted)}
+.req-footer{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--card-border)}
+.req-hospital{font-size:0.78rem;color:var(--muted);display:flex;align-items:center;gap:4px}
+.no-results{text-align:center;padding:3rem;color:var(--muted);grid-column:1/-1}
+.no-results .nr-icon{font-size:3rem;margin-bottom:1rem}
+
+/* HOSPITALS */
+.hosp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:1.5rem}
+.hosp-card{background:var(--card);border-radius:16px;border:1px solid var(--card-border);padding:1.25rem;transition:all 0.2s}
+.hosp-card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.1);transform:translateY(-2px)}
+.hosp-header{display:flex;align-items:center;gap:12px;margin-bottom:1rem}
+.hosp-icon{width:48px;height:48px;border-radius:12px;background:var(--success-bg);display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.hosp-name{font-weight:600;font-size:0.95rem;color:var(--text);margin-bottom:2px}
+.hosp-city{font-size:0.8rem;color:var(--muted)}
+.verified-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.7rem;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--success-bg);color:var(--success)}
+.inventory-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:0.75rem}
+.inv-chip{font-size:0.72rem;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--red-light);color:var(--red)}
+.inv-chip.low{background:var(--warning-bg);color:var(--warning)}
+
+/* HOW IT WORKS */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:2.5rem}
+.step-card{text-align:center;padding:2rem 1.5rem;background:var(--card);border-radius:16px;border:1px solid var(--card-border);transition:all 0.2s}
+.step-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(200,16,46,0.1)}
+.step-num{width:52px;height:52px;border-radius:50%;background:var(--red-light);border:2px solid rgba(200,16,46,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--red)}
+.step-title{font-weight:600;font-size:1rem;margin-bottom:0.5rem;color:var(--text)}
+.step-desc{font-size:0.875rem;color:var(--muted);line-height:1.6}
+
+/* FORMS */
+.form-page{padding:3rem 2rem;max-width:640px;margin:0 auto}
+.form-card{background:var(--card);border-radius:20px;border:1px solid var(--card-border);padding:2rem}
+.form-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:0.4rem;color:var(--text)}
+.form-sub{font-size:0.9rem;color:var(--muted);margin-bottom:1.75rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-row{grid-column:1/-1}
+.blood-selector{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.blood-opt{display:none}
+.blood-opt+label{display:flex;align-items:center;justify-content:center;padding:10px;border-radius:10px;border:1.5px solid var(--card-border);font-weight:700;font-size:0.95rem;cursor:pointer;transition:all 0.18s;color:var(--muted)}
+.blood-opt:checked+label{background:var(--red);color:white;border-color:var(--red);box-shadow:0 4px 12px rgba(200,16,46,0.3)}
+.blood-opt+label:hover{border-color:var(--red);color:var(--red)}
+.checkbox-row{display:flex;align-items:center;gap:10px;cursor:pointer}
+.checkbox-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--red);cursor:pointer}
+.checkbox-row span{font-size:0.875rem;color:var(--text-mid)}
+.alert{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:10px;font-size:0.875rem;margin-bottom:1rem}
+.alert-success{background:var(--success-bg);color:var(--success)}
+.alert-error{background:var(--red-light);color:var(--red-dark)}
+
+/* MAP VISUAL */
+.map-section{padding:3rem 2rem;max-width:960px;margin:0 auto}
+.map-visual{background:var(--card);border-radius:16px;border:1px solid var(--card-border);padding:1.5rem;position:relative;overflow:hidden}
+.map-pk{width:100%;max-width:600px;margin:0 auto;display:block;position:relative}
+.city-dot{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--red);border:2px solid white;box-shadow:0 0 0 3px rgba(200,16,46,0.3);cursor:pointer;transform:translate(-50%,-50%);transition:all 0.2s;animation:citypulse 2s ease-in-out infinite}
+@keyframes citypulse{0%,100%{box-shadow:0 0 0 3px rgba(200,16,46,0.3)}50%{box-shadow:0 0 0 6px rgba(200,16,46,0.15)}}
+.city-dot:hover{transform:translate(-50%,-50%) scale(1.4)}
+.city-label{position:absolute;font-size:0.7rem;font-weight:700;color:var(--text);white-space:nowrap;transform:translate(-50%,-50%)}
+.city-tooltip{position:absolute;background:var(--ink);color:white;padding:6px 10px;border-radius:8px;font-size:0.75rem;font-weight:500;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity 0.2s;z-index:10}
+
+/* TABS */
+.tab-nav{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:12px;margin-bottom:1.5rem;width:fit-content;border:1px solid var(--card-border)}
+.tab-btn{padding:8px 18px;border-radius:9px;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:500;color:var(--muted);cursor:pointer;transition:all 0.18s}
+.tab-btn.active{background:var(--card);color:var(--red);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,0.1)}
+
+/* ADMIN */
+.admin-wrap{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:calc(100vh - 64px)}
+.admin-sidebar{background:var(--sidebar-bg);border-right:1px solid var(--card-border);padding:1.5rem 1rem}
+.sidebar-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);padding:0 8px;margin-bottom:8px;margin-top:1rem}
+.sidebar-title:first-child{margin-top:0}
+.sidebar-link{display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:9px;font-size:0.875rem;font-weight:500;color:var(--text-mid);cursor:pointer;transition:all 0.18s;text-decoration:none}
+.sidebar-link:hover{background:var(--red-light);color:var(--red)}
+.sidebar-link.active{background:var(--red-light);color:var(--red);font-weight:600}
+.admin-content{padding:2rem;background:var(--bg)}
+.admin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem}
+.admin-stat{background:var(--card);border-radius:12px;border:1px solid var(--card-border);padding:1.25rem}
+.admin-stat-val{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--text)}
+.admin-stat-lbl{font-size:0.78rem;color:var(--muted);margin-top:2px}
+.admin-stat-change{font-size:0.75rem;margin-top:6px}
+.change-up{color:var(--success)}
+.change-dn{color:var(--red)}
+.data-table{background:var(--card);border-radius:14px;border:1px solid var(--card-border);overflow:hidden}
+.data-table-header{padding:1rem 1.25rem;border-bottom:1px solid var(--card-border);display:flex;align-items:center;justify-content:space-between}
+.data-table-title{font-weight:600;font-size:0.95rem;color:var(--text)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);padding:10px 16px;border-bottom:1px solid var(--card-border);background:var(--bg)}
+td{padding:12px 16px;font-size:0.875rem;border-bottom:1px solid var(--card-border);color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--table-row)}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;font-weight:700;padding:3px 9px;border-radius:20px}
+.pill-green{background:var(--success-bg);color:var(--success)}
+.pill-red{background:var(--red-light);color:var(--red-dark)}
+.pill-yellow{background:var(--warning-bg);color:var(--warning)}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,16,8,0.75);z-index:200;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border-radius:20px;padding:2rem;max-width:480px;width:100%;position:relative;max-height:90vh;overflow-y:auto;animation:modalIn 0.3s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{position:absolute;top:1rem;right:1rem;background:var(--bg);border:1px solid var(--card-border);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);font-size:1.1rem;line-height:1;transition:all 0.2s}
+.modal-close:hover{color:var(--red);border-color:var(--red)}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:0.25rem;color:var(--text)}
+.modal-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink);color:white;padding:14px 20px;border-radius:12px;font-size:0.875rem;z-index:999;opacity:0;transform:translateY(10px);transition:all 0.3s;max-width:320px;box-shadow:0 8px 32px rgba(0,0,0,0.2)}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.success{border-left:3px solid #2ECC71}
+.toast.error{border-left:3px solid var(--red)}
+
+/* EMERGENCY BAR */
+.emer-bar{background:linear-gradient(90deg,var(--red-dark),var(--red));color:white;text-align:center;padding:10px;font-size:0.85rem;font-weight:600;letter-spacing:0.01em;position:relative;overflow:hidden}
+.emer-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);animation:shimmer 3s infinite}
+@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:3rem 2rem;margin-top:4rem}
+.footer-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
+.footer-brand{font-family:'Playfair Display',serif;font-size:1.6rem;color:white;font-weight:900;margin-bottom:0.75rem}
+.footer-desc{font-size:0.85rem;line-height:1.7}
+.footer-col h4{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:1rem}
+.footer-col a{display:block;font-size:0.875rem;color:rgba(255,255,255,0.6);text-decoration:none;margin-bottom:0.5rem;transition:color 0.2s;cursor:pointer}
+.footer-col a:hover{color:var(--red-mid)}
+.footer-bottom{max-width:960px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between;align-items:center;font-size:0.8rem}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .search-box{grid-template-columns:1fr}
+  .steps-grid{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr;gap:2rem}
+  .form-grid{grid-template-columns:1fr}
+  .admin-wrap{grid-template-columns:1fr}
+  .admin-sidebar{display:none}
+  .admin-grid{grid-template-columns:repeat(2,1fr)}
+  nav{padding:0 1rem}
+  .nav-links{gap:0}
+  .nav-links a{padding:6px 7px;font-size:0.78rem}
+}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,0.4);font-size:0.75rem}
+.scroll-line{width:1px;height:32px;background:linear-gradient(to bottom,rgba(255,255,255,0.4),transparent);animation:scrollAnim 2s infinite}
+@keyframes scrollAnim{0%{opacity:0;transform:translateY(-8px)}50%{opacity:1}100%{opacity:0;transform:translateY(8px)}}
+</style>
+</head>
+<body>
+
+<div class="emer-bar">🩸 Emergency? Call <strong>1122</strong> (Rescue) or <strong>0800-BLOOD</strong> — Free 24/7 Blood Helpline Pakistan</div>
+
+<nav>
+  <a class="nav-logo" onclick="showPage('home')">🩸 Qatra</a>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home" class="active" data-en="Home" data-ur="ہوم">Home</a>
+    <a onclick="showPage('search')" id="nav-search" data-en="Find Donors" data-ur="ڈونر تلاش کریں">Find Donors</a>
+    <a onclick="showPage('requests')" id="nav-requests" data-en="Requests" data-ur="درخواستیں">Requests</a>
+    <a onclick="showPage('hospitals')" id="nav-hospitals" data-en="Hospitals" data-ur="ہسپتال">Hospitals</a>
+    <a onclick="showPage('camps')" id="nav-camps" data-en="Blood Camps" data-ur="بلڈ کیمپ">Blood Camps</a>
+    <a onclick="showPage('leaderboard')" id="nav-leaderboard" data-en="Heroes" data-ur="ہیرو">Heroes</a>
+  </div>
+  <div class="nav-right">
+    <button class="icon-btn" onclick="toggleLang()" title="اردو / English" id="lang-btn">اردو</button>
+    <button class="icon-btn" onclick="toggleDark()" title="Dark mode" id="dark-btn">🌙</button>
+    <button class="btn btn-outline btn-sm" onclick="showPage('hospital-register')" data-en="Register Hospital" data-ur="ہسپتال رجسٹر">Register Hospital</button>
+    <button class="btn btn-primary btn-sm" onclick="showModal('requestModal')" data-en="🩸 Need Blood?" data-ur="🩸 خون چاہیے؟">🩸 Need Blood?</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-pattern"></div>
+    <div class="floating-drops" id="drops"></div>
+    <div class="hero-badge"><span class="pulse-dot"></span> <span data-en="Live · 2,841 active donors across Pakistan" data-ur="لائیو · 2,841 فعال ڈونرز">Live · 2,841 active donors across Pakistan</span></div>
+    <h1 data-en="Every Drop<br><em>Saves a Life.</em>" data-ur="ہر قطرہ<br><em>ایک زندگی بچاتا ہے</em>">Every Drop<br><em>Saves a Life.</em></h1>
+    <p data-en="Pakistan's largest blood donor network. Connect with verified donors in your city — in minutes, not hours." data-ur="پاکستان کا سب سے بڑا بلڈ ڈونر نیٹ ورک۔ اپنے شہر میں تصدیق شدہ ڈونرز سے منٹوں میں رابطہ کریں۔">Pakistan's largest blood donor network. Connect with verified donors in your city — in minutes, not hours.</p>
+    <div class="hero-cta">
+      <button class="btn btn-primary btn-lg" onclick="showPage('search')" data-en="🔍 Find a Donor" data-ur="🔍 ڈونر تلاش کریں">🔍 Find a Donor</button>
+      <button class="btn btn-outline btn-lg" style="color:white;border-color:rgba(255,255,255,0.4);" onclick="showPage('register-donor')" data-en="Register as Donor" data-ur="ڈونر کے طور پر رجسٹر کریں">Register as Donor</button>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-item"><div class="stat-num" id="cnt1">0</div><div class="stat-lbl" data-en="Registered donors" data-ur="رجسٹرڈ ڈونرز">Registered donors</div></div>
+      <div class="stat-item"><div class="stat-num" id="cnt2">0</div><div class="stat-lbl" data-en="Lives saved" data-ur="بچائی گئی زندگیاں">Lives saved</div></div>
+      <div class="stat-item"><div class="stat-num" id="cnt3">0</div><div class="stat-lbl" data-en="Partner hospitals" data-ur="پارٹنر ہسپتال">Partner hospitals</div></div>
+      <div class="stat-item"><div class="stat-num" id="cnt4">0</div><div class="stat-lbl" data-en="Cities covered" data-ur="شہر">Cities covered</div></div>
+    </div>
+    <div class="hero-scroll"><div class="scroll-line"></div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-tag" data-en="Find instantly" data-ur="فوری تلاش">Find instantly</div>
+    <div class="section-title" data-en="Search blood donors near you" data-ur="اپنے قریب ڈونر تلاش کریں">Search blood donors near you</div>
+    <div style="margin-top:1.5rem;">
+    <div class="search-box">
+      <div class="form-group"><label data-en="Blood group needed" data-ur="مطلوبہ خون کا گروپ">Blood group needed</label>
+        <select id="hs-blood"><option value="">Any blood group</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+      <div class="form-group"><label data-en="City" data-ur="شہر">City</label>
+        <select id="hs-city"><option value="">Select city</option><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Rawalpindi</option><option>Faisalabad</option><option>Multan</option><option>Peshawar</option><option>Quetta</option><option>Sialkot</option><option>Gujranwala</option></select></div>
+      <div class="form-group"><label data-en="Area / Locality" data-ur="علاقہ">Area / Locality</label>
+        <input type="text" id="hs-area" placeholder="e.g. DHA, Gulberg, F-7…"></div>
+      <button class="btn btn-primary" onclick="doSearch()" data-en="Search" data-ur="تلاش کریں">Search</button>
+    </div>
+    </div>
+  </div>
+
+  <div style="padding:0 2rem 2rem;max-width:960px;margin:0 auto;">
+    <div class="section-tag" style="margin-bottom:1rem;" data-en="Quick search by blood type" data-ur="خون کی قسم سے تلاش">Quick search by blood type</div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+      <button onclick="quickSearch('A+')"  class="btn btn-outline">A+</button>
+      <button onclick="quickSearch('A-')"  class="btn btn-outline">A−</button>
+      <button onclick="quickSearch('B+')"  class="btn btn-outline">B+</button>
+      <button onclick="quickSearch('B-')"  class="btn btn-outline">B−</button>
+      <button onclick="quickSearch('AB+')" class="btn btn-outline">AB+</button>
+      <button onclick="quickSearch('AB-')" class="btn btn-outline">AB−</button>
+      <button onclick="quickSearch('O+')"  class="btn btn-outline" style="border-color:var(--red);color:var(--red);">O+ <span style="font-size:0.68rem;margin-left:3px;opacity:0.7;">universal</span></button>
+      <button onclick="quickSearch('O-')"  class="btn btn-outline" style="border-color:var(--red);color:var(--red);">O− <span style="font-size:0.68rem;margin-left:3px;opacity:0.7;">universal</span></button>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="section" style="padding-top:0;">
+    <div style="text-align:center;margin-bottom:0;">
+      <div class="section-tag" data-en="Simple process" data-ur="آسان عمل">Simple process</div>
+      <div class="section-title" data-en="How Qatra works" data-ur="قطرہ کیسے کام کرتا ہے">How Qatra works</div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num">1</div><div class="step-title" data-en="Search by blood group & city" data-ur="خون کی قسم اور شہر سے تلاش کریں">Search by blood group & city</div><div class="step-desc" data-en="Enter the required blood type and your city. We match you instantly with available, verified donors nearby." data-ur="مطلوبہ بلڈ گروپ اور شہر درج کریں۔ ہم آپ کو قریبی تصدیق شدہ ڈونرز سے فوری ملاتے ہیں۔">Enter the required blood type and your city. We match you instantly with available, verified donors nearby.</div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-title" data-en="Connect with a donor" data-ur="ڈونر سے رابطہ کریں">Connect with a donor</div><div class="step-desc" data-en="View donor profiles and contact them directly via WhatsApp or phone call." data-ur="ڈونر کا پروفائل دیکھیں اور واٹس ایپ یا فون کے ذریعے براہ راست رابطہ کریں۔">View donor profiles and contact them directly via WhatsApp or phone call.</div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-title" data-en="Save a life" data-ur="ایک زندگی بچائیں">Save a life</div><div class="step-desc" data-en="Meet at a hospital or blood bank. The donor gives blood and a life is saved. Every drop counts." data-ur="ہسپتال یا بلڈ بینک میں ملیں۔ ڈونر خون دیتا ہے اور ایک زندگی بچ جاتی ہے۔">Meet at a hospital or blood bank. The donor gives blood and a life is saved. Every drop counts.</div></div>
+    </div>
+  </div>
+
+  <!-- Urgent requests -->
+  <div class="urgent-section">
+    <div class="urgent-inner">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0;">
+        <div><div class="section-tag" data-en="Live feed" data-ur="لائیو فیڈ">Live feed</div><div class="section-title" style="font-size:1.6rem;" data-en="Urgent blood requests" data-ur="فوری خون کی درخواستیں">Urgent blood requests</div></div>
+        <button class="btn btn-outline" onclick="showPage('requests')" data-en="View all" data-ur="سب دیکھیں">View all</button>
+      </div>
+      <div class="urgent-grid" id="home-requests"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH PAGE -->
+<div class="page" id="page-search">
+  <div style="padding:3rem 2rem;max-width:1100px;margin:0 auto;">
+    <div style="margin-bottom:2rem;"><div class="section-tag" data-en="Donor directory" data-ur="ڈونر ڈائریکٹری">Donor directory</div><div class="section-title" data-en="Find blood donors in Pakistan" data-ur="پاکستان میں بلڈ ڈونر تلاش کریں">Find blood donors in Pakistan</div></div>
+    <div class="search-box" style="margin-bottom:2rem;">
+      <div class="form-group"><label>Blood group</label><select id="s-blood"><option value="">All groups</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+      <div class="form-group"><label>City</label><select id="s-city"><option value="">All cities</option><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Rawalpindi</option><option>Faisalabad</option><option>Multan</option><option>Peshawar</option><option>Quetta</option><option>Sialkot</option><option>Gujranwala</option></select></div>
+      <div class="form-group"><label>Area</label><input type="text" id="s-area" placeholder="e.g. Gulberg, DHA…"></div>
+      <button class="btn btn-primary" onclick="filterDonors()">Search</button>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <span style="font-size:0.875rem;color:var(--muted);" id="donor-count">Showing all donors</span>
+      <select onchange="sortDonors(this.value)" style="padding:6px 12px;border-radius:8px;border:1px solid var(--card-border);font-family:'DM Sans',sans-serif;font-size:0.8rem;background:var(--card);color:var(--text);">
+        <option value="name">Sort by name</option><option value="city">Sort by city</option><option value="avail">Available first</option>
+      </select>
+    </div>
+    <div class="donors-grid" id="donors-list"></div>
+  </div>
+</div>
+
+<!-- REQUESTS PAGE -->
+<div class="page" id="page-requests">
+  <div style="padding:3rem 2rem;max-width:960px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
+      <div><div class="section-tag" data-en="Live feed" data-ur="لائیو فیڈ">Live feed</div><div class="section-title" data-en="Blood requests across Pakistan" data-ur="پاکستان بھر میں خون کی درخواستیں">Blood requests across Pakistan</div></div>
+      <button class="btn btn-primary" onclick="showModal('requestModal')">+ Post a request</button>
+    </div>
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="filterRequests('all',this)">All</button>
+      <button class="tab-btn" onclick="filterRequests('urgent',this)">🚨 Urgent</button>
+      <button class="tab-btn" onclick="filterRequests('lahore',this)">Lahore</button>
+      <button class="tab-btn" onclick="filterRequests('karachi',this)">Karachi</button>
+      <button class="tab-btn" onclick="filterRequests('islamabad',this)">Islamabad</button>
+    </div>
+    <div class="urgent-grid" id="all-requests"></div>
+  </div>
+</div>
+
+<!-- HOSPITALS PAGE -->
+<div class="page" id="page-hospitals">
+  <div style="padding:3rem 2rem;max-width:1100px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
+      <div><div class="section-tag">Partner network</div><div class="section-title">Registered hospitals & blood banks</div></div>
+      <button class="btn btn-outline" onclick="showPage('hospital-register')">Register your hospital</button>
+    </div>
+    <div class="search-box" style="grid-template-columns:1fr 1fr auto;margin-bottom:2rem;">
+      <div class="form-group"><label>Search by name</label><input type="text" id="hosp-search" placeholder="Hospital name…" oninput="filterHospitals()"></div>
+      <div class="form-group"><label>City</label><select id="hosp-city" onchange="filterHospitals()"><option value="">All cities</option><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Rawalpindi</option><option>Faisalabad</option><option>Multan</option></select></div>
+      <button class="btn btn-primary" onclick="filterHospitals()">Filter</button>
+    </div>
+    <div class="hosp-grid" id="hosp-list"></div>
+  </div>
+</div>
+
+<!-- LEADERBOARD PAGE -->
+<div class="page" id="page-leaderboard">
+  <div style="padding:3rem 2rem;max-width:960px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:2.5rem;">
+      <div class="section-tag" data-en="Hall of Fame" data-ur="ہال آف فیم">Hall of Fame</div>
+      <div class="section-title" data-en="Our blood donation heroes 🏆" data-ur="ہمارے خون کے ہیرو 🏆">Our blood donation heroes 🏆</div>
+      <p style="color:var(--muted);margin-top:0.5rem;font-size:0.9rem;" data-en="Every donation is an act of love. These heroes have saved the most lives." data-ur="ہر عطیہ محبت کا عمل ہے۔ ان ہیروز نے سب سے زیادہ زندگیاں بچائی ہیں۔">Every donation is an act of love. These heroes have saved the most lives.</p>
+    </div>
+    <!-- Top 3 podium -->
+    <div style="display:flex;justify-content:center;align-items:flex-end;gap:16px;margin-bottom:2.5rem;flex-wrap:wrap;">
+      <div id="podium-2" style="text-align:center;"></div>
+      <div id="podium-1" style="text-align:center;"></div>
+      <div id="podium-3" style="text-align:center;"></div>
+    </div>
+    <div class="lb-grid" id="lb-list"></div>
+  </div>
+</div>
+
+<!-- BLOOD CAMPS PAGE -->
+<div class="page" id="page-camps">
+  <div style="padding:3rem 2rem;max-width:960px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
+      <div><div class="section-tag" data-en="Upcoming events" data-ur="آنے والے واقعات">Upcoming events</div><div class="section-title" data-en="Blood donation camps 🏕️" data-ur="بلڈ ڈونیشن کیمپ 🏕️">Blood donation camps 🏕️</div></div>
+      <button class="btn btn-primary" onclick="showToast('Camp registration coming soon!','success')">+ Organise a camp</button>
+    </div>
+    <div class="donors-grid" id="camps-list"></div>
+    <!-- Compatibility Chart -->
+    <div style="margin-top:3rem;">
+      <div class="section-tag" data-en="Blood compatibility" data-ur="خون کی مطابقت">Blood compatibility</div>
+      <div class="section-title" data-en="Who can give to whom?" data-ur="کون کسے خون دے سکتا ہے؟">Who can give to whom?</div>
+      <div class="compat-table-wrap">
+        <table class="compat-table" id="compat-table"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER DONOR -->
+<div class="page" id="page-register-donor">
+  <div class="form-page">
+    <div style="margin-bottom:0.5rem;"><button onclick="showPage('home')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.875rem;">← Back</button></div>
+    <div class="form-card">
+      <div class="form-title" data-en="Become a donor 🩸" data-ur="ڈونر بنیں 🩸">Become a donor 🩸</div>
+      <div class="form-sub" data-en="Join Pakistan's largest blood donor network. Your registration could save lives." data-ur="پاکستان کے سب سے بڑے بلڈ ڈونر نیٹ ورک میں شامل ہوں۔">Join Pakistan's largest blood donor network. Your registration could save lives.</div>
+      <div id="donor-form-alert"></div>
+      <div class="form-grid">
+        <div class="form-group"><label>First name</label><input type="text" id="d-fname" placeholder="Ahmed"></div>
+        <div class="form-group"><label>Last name</label><input type="text" id="d-lname" placeholder="Khan"></div>
+        <div class="form-group"><label>CNIC</label><input type="text" id="d-cnic" placeholder="XXXXX-XXXXXXX-X"></div>
+        <div class="form-group"><label>Date of birth</label><input type="date" id="d-dob"></div>
+        <div class="form-group"><label>Phone (WhatsApp)</label><input type="tel" id="d-phone" placeholder="03XX-XXXXXXX"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="d-email" placeholder="you@example.com"></div>
+        <div class="form-group"><label>City</label><select id="d-city"><option value="">Select city</option><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Rawalpindi</option><option>Faisalabad</option><option>Multan</option><option>Peshawar</option><option>Quetta</option><option>Sialkot</option><option>Gujranwala</option></select></div>
+        <div class="form-group"><label>Area</label><input type="text" id="d-area" placeholder="e.g. Gulberg III"></div>
+        <div class="form-group form-row"><label style="margin-bottom:10px;">Blood group</label>
+          <div class="blood-selector">
+            <input type="radio" name="dblood" id="db-ap" value="A+" class="blood-opt"><label for="db-ap">A+</label>
+            <input type="radio" name="dblood" id="db-an" value="A-" class="blood-opt"><label for="db-an">A−</label>
+            <input type="radio" name="dblood" id="db-bp" value="B+" class="blood-opt"><label for="db-bp">B+</label>
+            <input type="radio" name="dblood" id="db-bn" value="B-" class="blood-opt"><label for="db-bn">B−</label>
+            <input type="radio" name="dblood" id="db-abp" value="AB+" class="blood-opt"><label for="db-abp">AB+</label>
+            <input type="radio" name="dblood" id="db-abn" value="AB-" class="blood-opt"><label for="db-abn">AB−</label>
+            <input type="radio" name="dblood" id="db-op" value="O+" class="blood-opt"><label for="db-op">O+</label>
+            <input type="radio" name="dblood" id="db-on" value="O-" class="blood-opt"><label for="db-on">O−</label>
+          </div>
+        </div>
+        <div class="form-group"><label>Last donation date</label><input type="date" id="d-lastdon"></div>
+        <div class="form-group"><label>Total donations</label><input type="number" id="d-donations" placeholder="0" min="0"></div>
+        <div class="form-group form-row"><label>Health conditions (optional)</label><textarea id="d-health" placeholder="Any relevant medical history…"></textarea></div>
+        <div class="form-group form-row" style="gap:12px;display:flex;flex-direction:column;">
+          <label class="checkbox-row"><input type="checkbox" id="d-avail" checked><span>I am currently available to donate blood</span></label>
+          <label class="checkbox-row"><input type="checkbox" id="d-notify"><span>Notify me via SMS/WhatsApp when someone nearby needs my blood type</span></label>
+          <label class="checkbox-row"><input type="checkbox" id="d-terms"><span>I agree to the terms of service</span></label>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;"><button class="btn btn-primary btn-lg" style="width:100%;" onclick="registerDonor()">Register as donor →</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOSPITAL REGISTER -->
+<div class="page" id="page-hospital-register">
+  <div class="form-page" style="max-width:700px;">
+    <div style="margin-bottom:0.5rem;"><button onclick="showPage('hospitals')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.875rem;">← Back</button></div>
+    <div class="form-card">
+      <div class="form-title">Register your hospital 🏥</div>
+      <div class="form-sub">Verified hospitals can post blood requests, manage inventory, and contact donors. Admin verification required.</div>
+      <div id="hosp-form-alert"></div>
+      <div class="form-grid">
+        <div class="form-group form-row"><label>Hospital / Blood bank name</label><input type="text" id="h-name" placeholder="e.g. Shaukat Khanum Memorial Hospital"></div>
+        <div class="form-group"><label>PMDC / Health Registration #</label><input type="text" id="h-reg" placeholder="Registration number"></div>
+        <div class="form-group"><label>Type</label><select id="h-type"><option>Government hospital</option><option>Private hospital</option><option>Blood bank</option><option>Thalassemia centre</option><option>NGO / Welfare organisation</option></select></div>
+        <div class="form-group"><label>City</label><select id="h-city"><option value="">Select city</option><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Rawalpindi</option><option>Faisalabad</option><option>Multan</option><option>Peshawar</option><option>Quetta</option></select></div>
+        <div class="form-group form-row"><label>Full address</label><input type="text" id="h-address" placeholder="Street, area, city"></div>
+        <div class="form-group"><label>Contact phone</label><input type="tel" id="h-phone" placeholder="Landline or mobile"></div>
+        <div class="form-group"><label>Emergency / 24h line</label><input type="tel" id="h-emer" placeholder="Emergency line"></div>
+        <div class="form-group"><label>Official email</label><input type="email" id="h-email" placeholder="blood@hospital.org"></div>
+        <div class="form-group form-row"><label>Blood inventory (optional)</label>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;">
+            <div class="form-group"><label>A+</label><input type="number" id="inv-ap" placeholder="units" min="0"></div>
+            <div class="form-group"><label>A−</label><input type="number" id="inv-an" placeholder="units" min="0"></div>
+            <div class="form-group"><label>B+</label><input type="number" id="inv-bp" placeholder="units" min="0"></div>
+            <div class="form-group"><label>B−</label><input type="number" id="inv-bn" placeholder="units" min="0"></div>
+            <div class="form-group"><label>AB+</label><input type="number" id="inv-abp" placeholder="units" min="0"></div>
+            <div class="form-group"><label>AB−</label><input type="number" id="inv-abn" placeholder="units" min="0"></div>
+            <div class="form-group"><label>O+</label><input type="number" id="inv-op" placeholder="units" min="0"></div>
+            <div class="form-group"><label>O−</label><input type="number" id="inv-on" placeholder="units" min="0"></div>
+          </div>
+        </div>
+        <div class="form-group form-row"><label>About your facility (optional)</label><textarea id="h-about" placeholder="Services, specialisations, working hours…"></textarea></div>
+        <div class="form-group form-row"><label class="checkbox-row"><input type="checkbox" id="h-terms"><span>I confirm this is a legitimate registered institution and agree to Qatra's terms for healthcare partners.</span></label></div>
+      </div>
+      <div style="margin-top:1.5rem;"><button class="btn btn-primary btn-lg" style="width:100%;" onclick="registerHospital()">Submit for verification →</button></div>
+      <p style="font-size:0.78rem;color:var(--muted);margin-top:1rem;text-align:center;">Our team verifies each hospital within 24–48 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="page" id="page-admin">
+  <div class="admin-wrap">
+    <div class="admin-sidebar">
+      <div class="sidebar-title">Overview</div>
+      <a class="sidebar-link active" onclick="adminTab('dashboard',this)"><span>📊</span> Dashboard</a>
+      <div class="sidebar-title">Management</div>
+      <a class="sidebar-link" onclick="adminTab('donors',this)"><span>🩸</span> Donors</a>
+      <a class="sidebar-link" onclick="adminTab('hospitals',this)"><span>🏥</span> Hospitals</a>
+      <a class="sidebar-link" onclick="adminTab('requests',this)"><span>📋</span> Requests</a>
+      <a class="sidebar-link" onclick="adminTab('camps',this)"><span>🏕️</span> Blood Camps</a>
+      <div class="sidebar-title">Settings</div>
+      <a class="sidebar-link" onclick="adminTab('cities',this)"><span>🗺️</span> Cities</a>
+      <a class="sidebar-link" onclick="showPage('home')"><span>←</span> Exit admin</a>
+    </div>
+    <div class="admin-content" id="admin-main"></div>
+  </div>
+</div>
+
+<!-- MODAL: REQUEST -->
+<div class="modal-overlay" id="requestModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('requestModal')">×</button>
+    <div class="modal-title" data-en="Post a blood request 🩸" data-ur="خون کی درخواست پوسٹ کریں 🩸">Post a blood request 🩸</div>
+    <div class="modal-sub" data-en="We'll notify matching donors immediately via SMS & WhatsApp." data-ur="ہم فوری طور پر میچنگ ڈونرز کو SMS اور واٹس ایپ کے ذریعے مطلع کریں گے۔">We'll notify matching donors immediately via SMS & WhatsApp.</div>
+    <div id="req-modal-alert"></div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="form-group"><label>Patient name</label><input type="text" id="req-patient" placeholder="Full name"></div>
+      <div class="form-group"><label>Blood group needed</label>
+        <div class="blood-selector">
+          <input type="radio" name="rblood" id="rb-ap" value="A+" class="blood-opt"><label for="rb-ap">A+</label>
+          <input type="radio" name="rblood" id="rb-an" value="A-" class="blood-opt"><label for="rb-an">A−</label>
+          <input type="radio" name="rblood" id="rb-bp" value="B+" class="blood-opt"><label for="rb-bp">B+</label>
+          <input type="radio" name="rblood" id="rb-bn" value="B-" class="blood-opt"><label for="rb-bn">B−</label>
+          <input type="radio" name="rblood" id="rb-abp" value="AB+" class="blood-opt"><label for="rb-abp">AB+</label>
+          <input type="radio" name="rblood" id="rb-abn" value="AB-" class="blood-opt"><label for="rb-abn">AB−</label>
+          <input type="radio" name="rblood" id="rb-op" value="O+" class="blood-opt"><label for="rb-op">O+</label>
+          <input type="radio" name="rblood" id="rb-on" value="O-" class="blood-opt"><label for="rb-on">O−</label>
+        </div>
+      </div>
+      <div class="form-group"><label>Units required</label><input type="number" id="req-units" placeholder="e.g. 2" min="1"></div>
+      <div class="form-group"><label>Hospital / Location</label><input type="text" id="req-location" placeholder="Hospital name and city"></div>
+      <div class="form-group"><label>City</label><select id="req-city"><option value="">Select city</option><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Rawalpindi</option><option>Faisalabad</option><option>Multan</option><option>Peshawar</option><option>Quetta</option></select></div>
+      <div class="form-group"><label>Contact number</label><input type="tel" id="req-phone" placeholder="03XX-XXXXXXX"></div>
+      <div class="form-group"><label>Notes</label><textarea id="req-notes" placeholder="Any additional information…" style="min-height:60px;"></textarea></div>
+      <div class="form-group"><label class="checkbox-row"><input type="checkbox" id="req-urgent"><span>Mark as URGENT (critical / emergency)</span></label></div>
+      <button class="btn btn-primary btn-lg" style="width:100%;" onclick="postRequest()">Post request & notify donors →</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CONTACT DONOR -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal" id="contactModalContent"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">🩸 Qatra</div>
+      <div class="footer-desc">Pakistan's largest voluntary blood donor network. Connecting lives. Every drop — every qatra — counts. 🇵🇰</div>
+    </div>
+    <div class="footer-col"><h4>Platform</h4>
+      <a onclick="showPage('search')">Find donors</a>
+      <a onclick="showPage('requests')">Blood requests</a>
+      <a onclick="showPage('hospitals')">Hospitals</a>
+      <a onclick="showPage('camps')">Blood camps</a>
+      <a onclick="showPage('leaderboard')">Hero leaderboard</a>
+    </div>
+    <div class="footer-col"><h4>Join</h4>
+      <a onclick="showPage('register-donor')">Become a donor</a>
+      <a onclick="showPage('hospital-register')">Register hospital</a>
+      <a onclick="showPage('admin');adminTab('dashboard',null)">Admin panel</a>
+      <a>Privacy policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Qatra Blood Network — Built for Pakistan 🇵🇰</span>
+    <span>Emergency: <strong style="color:var(--red-mid);">1122</strong></span>
+  </div>
+</footer>
+
+<script>
+// ── API CONFIG ──
+// Path to the PHP backend folder. If index.html and /backend are in the same
+// folder on your XAMPP server (e.g. htdocs/qatra/), 'backend/' works as-is.
+const API_BASE = 'backend/';
+
+// ── DATA (loaded live from MySQL via PHP — see /backend/*.php) ──
+let donors = [];
+let bloodRequests = [];
+let hospitals = [];
+let camps = [];
+let leaderboard = [];
+let filteredDonors = [];
+let isDark = false;
+let isUrdu = false;
+
+// ── LOAD DATA FROM BACKEND ──
+async function loadDonors() {
+  try {
+    const res = await fetch(API_BASE + 'donors.php');
+    if(!res.ok) throw new Error('Server error ' + res.status);
+    donors = await res.json();
+  } catch(err) {
+    console.error('Failed to load donors:', err);
+    donors = [];
+    showToast('Could not load donors — check backend/database setup','error');
+  }
+  filteredDonors = [...donors];
+  leaderboard = [...donors].sort((a,b)=>b.donations-a.donations);
+}
+async function loadHospitals() {
+  try {
+    const res = await fetch(API_BASE + 'hospitals.php');
+    if(!res.ok) throw new Error('Server error ' + res.status);
+    hospitals = await res.json();
+  } catch(err) {
+    console.error('Failed to load hospitals:', err);
+    hospitals = [];
+  }
+}
+async function loadRequests() {
+  try {
+    const res = await fetch(API_BASE + 'requests.php');
+    if(!res.ok) throw new Error('Server error ' + res.status);
+    bloodRequests = await res.json();
+  } catch(err) {
+    console.error('Failed to load requests:', err);
+    bloodRequests = [];
+  }
+}
+async function loadCamps() {
+  try {
+    const res = await fetch(API_BASE + 'camps.php');
+    if(!res.ok) throw new Error('Server error ' + res.status);
+    camps = await res.json();
+  } catch(err) {
+    console.error('Failed to load camps:', err);
+    camps = [];
+  }
+}
+async function loadAllData() {
+  await Promise.all([loadDonors(), loadHospitals(), loadRequests(), loadCamps()]);
+  renderHomeRequests();
+  renderDonors(donors);
+  renderAllRequests(bloodRequests);
+  renderHospitals(hospitals);
+}
+
+// ── DARK MODE ──
+function toggleDark() {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.getElementById('dark-btn').textContent = isDark ? '☀️' : '🌙';
+}
+
+// ── LANGUAGE ──
+function toggleLang() {
+  isUrdu = !isUrdu;
+  document.documentElement.setAttribute('data-lang', isUrdu ? 'ur' : 'en');
+  document.getElementById('lang-btn').textContent = isUrdu ? 'English' : 'اردو';
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const key = isUrdu ? 'ur' : 'en';
+    if(el.tagName === 'INPUT' || el.tagName === 'SELECT') return;
+    el.innerHTML = el.getAttribute('data-' + key) || el.innerHTML;
+  });
+}
+
+// ── FLOATING DROPS ──
+function createDrops() {
+  const container = document.getElementById('drops');
+  for(let i=0;i<12;i++){
+    const d = document.createElement('div');
+    d.className = 'drop';
+    d.textContent = '🩸';
+    d.style.left = Math.random()*100+'%';
+    d.style.animationDuration = (8+Math.random()*12)+'s';
+    d.style.animationDelay = (Math.random()*10)+'s';
+    d.style.fontSize = (0.8+Math.random()*1.5)+'rem';
+    container.appendChild(d);
+  }
+}
+
+// ── COUNTER ANIMATION ──
+function animateCounter(id, target, suffix='') {
+  const el = document.getElementById(id);
+  if(!el) return;
+  let current = 0;
+  const increment = target / 80;
+  const timer = setInterval(() => {
+    current += increment;
+    if(current >= target) { el.textContent = target.toLocaleString() + suffix; clearInterval(timer); return; }
+    el.textContent = Math.floor(current).toLocaleString() + suffix;
+  }, 20);
+}
+
+// ── PAGE NAVIGATION ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const nav = document.getElementById('nav-'+id);
+  if(nav) nav.classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='search') renderDonors(filteredDonors.length?filteredDonors:donors);
+  if(id==='requests') renderAllRequests(bloodRequests);
+  if(id==='hospitals') renderHospitals(hospitals);
+  if(id==='leaderboard') renderLeaderboard();
+  if(id==='camps') { renderCamps(); renderCompatTable(); }
+  if(id==='admin') adminTab('dashboard',null);
+}
+
+// ── SEARCH ──
+function doSearch() {
+  const blood = document.getElementById('hs-blood').value;
+  const city = document.getElementById('hs-city').value;
+  document.getElementById('s-blood').value = blood;
+  document.getElementById('s-city').value = city;
+  showPage('search');
+  filterDonors();
+}
+function quickSearch(blood) {
+  document.getElementById('s-blood').value = blood;
+  document.getElementById('s-city').value = '';
+  showPage('search');
+  filterDonors();
+}
+function filterDonors() {
+  const blood = document.getElementById('s-blood').value;
+  const city  = document.getElementById('s-city').value;
+  const area  = (document.getElementById('s-area').value||'').toLowerCase();
+  filteredDonors = donors.filter(d => {
+    if(blood && d.blood !== blood) return false;
+    if(city  && d.city  !== city)  return false;
+    if(area  && !d.area.toLowerCase().includes(area)) return false;
+    return true;
+  });
+  renderDonors(filteredDonors);
+}
+function sortDonors(by) {
+  let arr = [...filteredDonors];
+  if(by==='name')  arr.sort((a,b)=>a.name.localeCompare(b.name));
+  if(by==='city')  arr.sort((a,b)=>a.city.localeCompare(b.city));
+  if(by==='avail') arr.sort((a,b)=>b.available-a.available);
+  renderDonors(arr);
+}
+
+function donorBadges(d) {
+  const badges = [];
+  if(d.donations>=50) badges.push('<span class="badge badge-gold">🥇 Legend</span>');
+  else if(d.donations>=20) badges.push('<span class="badge badge-red">⭐ Hero</span>');
+  else if(d.donations>=10) badges.push('<span class="badge badge-green">✓ Regular</span>');
+  else if(d.donations>=1) badges.push('<span class="badge badge-blue">🌱 Starter</span>');
+  if(d.blood==='O-') badges.push('<span class="badge badge-red">🩸 Universal</span>');
+  return badges.join('');
+}
+
+function renderDonors(list) {
+  const el = document.getElementById('donors-list');
+  const cnt = document.getElementById('donor-count');
+  if(cnt) cnt.textContent = list.length===donors.length ? `Showing all ${donors.length} donors` : `Found ${list.length} donor${list.length!==1?'s':''}`;
+  if(!list.length) { el.innerHTML=`<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:600;margin-bottom:6px;">No donors found</div><div>Try a different blood group or city.</div></div>`; return; }
+  el.innerHTML = list.map(d=>`
+    <div class="donor-card">
+      <div class="donor-top">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="donor-avatar">${d.blood}</div>
+          <div><div class="donor-name">${d.name}</div><div class="donor-meta"><span class="status-dot ${d.available?'avail':'unavail'}"></span>${d.available?'Available':'Unavailable'}</div></div>
+        </div>
+        <span class="blood-badge">${d.blood}</span>
+      </div>
+      <div style="margin-top:6px;">${donorBadges(d)}</div>
+      <div class="donor-detail">
+        <div class="donor-detail-row"><span>📍 Location</span><span>${d.area}, ${d.city}</span></div>
+        <div class="donor-detail-row"><span>🩸 Donations</span><span>${d.donations} times</span></div>
+        <div class="donor-detail-row"><span>📅 Last donated</span><span>${formatDate(d.lastDon)}</span></div>
+        <div class="donor-detail-row"><span>👤 Age</span><span>${d.age} years</span></div>
+      </div>
+      <div class="donor-actions">
+        ${d.available?`<button class="btn btn-primary btn-sm" style="flex:1;" onclick="contactDonor(${d.id})">📞 Contact</button>`:`<button class="btn btn-sm" style="flex:1;background:var(--bg);color:var(--muted);border:1px solid var(--card-border);cursor:not-allowed;">Unavailable</button>`}
+        <button class="btn btn-outline btn-sm" onclick="whatsapp('${d.phone}','${d.blood}')">WhatsApp</button>
+      </div>
+    </div>`).join('');
+}
+
+// ── REQUESTS ──
+function renderHomeRequests() {
+  const el = document.getElementById('home-requests');
+  if(!el) return;
+  el.innerHTML = bloodRequests.slice(0,3).map(r=>reqCard(r)).join('');
+}
+function filterRequests(type,btn) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  let list = type==='urgent' ? bloodRequests.filter(r=>r.urgent) : type==='all' ? bloodRequests : bloodRequests.filter(r=>r.city===type);
+  renderAllRequests(list);
+}
+function renderAllRequests(list) {
+  const el = document.getElementById('all-requests');
+  if(!el) return;
+  if(!list.length) { el.innerHTML=`<div class="no-results" style="grid-column:1/-1;"><div class="nr-icon">📋</div><div>No requests found</div></div>`; return; }
+  el.innerHTML = list.map(r=>reqCard(r)).join('');
+}
+function reqCard(r) {
+  return `<div class="request-card ${r.urgent?'urgent':'normal'}">
+    <div class="req-top"><span class="req-blood">${r.blood}</span><span class="req-tag ${r.urgent?'tag-urgent':'tag-normal'}">${r.urgent?'🚨 Urgent':'Normal'}</span></div>
+    <div class="req-title">${r.patient}</div>
+    <div class="req-sub">📍 ${r.location}</div>
+    ${r.notes?`<div class="req-sub" style="margin-top:4px;font-style:italic;">${r.notes}</div>`:''}
+    <div class="req-footer"><span class="req-hospital">🏥 ${r.hospital}</span><span style="font-size:0.75rem;color:var(--muted);">${r.time}</span></div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="btn btn-primary btn-sm" style="flex:1;" onclick="showToast('Calling ${r.phone}…','success')">📞 ${r.phone}</button>
+      <button class="btn btn-outline btn-sm" onclick="whatsapp('${r.phone}','${r.blood}')">WhatsApp</button>
+    </div>
+  </div>`;
+}
+
+// ── HOSPITALS ──
+function filterHospitals() {
+  const q=(document.getElementById('hosp-search').value||'').toLowerCase();
+  const city=document.getElementById('hosp-city').value;
+  renderHospitals(hospitals.filter(h=>(!q||h.name.toLowerCase().includes(q))&&(!city||h.city===city)));
+}
+function renderHospitals(list) {
+  const el=document.getElementById('hosp-list');
+  if(!el) return;
+  if(!list.length){el.innerHTML=`<div class="no-results" style="grid-column:1/-1;"><div class="nr-icon">🏥</div><div>No hospitals found</div></div>`;return;}
+  el.innerHTML=list.map(h=>{
+    const invKeys=Object.keys(h.inv);
+    const invHTML=invKeys.length?invKeys.map(k=>`<span class="inv-chip ${h.inv[k]<3?'low':''}">${k}: ${h.inv[k]}</span>`).join(''):'<span style="font-size:0.78rem;color:var(--muted);">No inventory data</span>';
+    return `<div class="hosp-card">
+      <div class="hosp-header"><div class="hosp-icon">${h.type==='Blood bank'?'🩸':'🏥'}</div><div><div class="hosp-name">${h.name}</div><div class="hosp-city">📍 ${h.city} · ${h.type}</div></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">${h.verified?`<span class="verified-badge">✓ Verified</span>`:`<span class="pill pill-yellow">⏳ Pending</span>`}<span style="font-size:0.8rem;color:var(--muted);">📞 ${h.phone}</span></div>
+      ${invKeys.length?`<div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:6px;">Blood inventory</div><div class="inventory-row">${invHTML}</div>`:''}
+      <div style="margin-top:12px;display:flex;gap:8px;"><button class="btn btn-primary btn-sm" style="flex:1;" onclick="showToast('Calling ${h.phone}…','success')">📞 Call</button><button class="btn btn-outline btn-sm" onclick="showToast('Opening WhatsApp…','success')">WhatsApp</button></div>
+    </div>`;
+  }).join('');
+}
+
+// ── LEADERBOARD ──
+function renderLeaderboard() {
+  const top3 = leaderboard.slice(0,3);
+  const order = [1,0,2]; // 2nd, 1st, 3rd on podium
+  const heights = ['80px','110px','60px'];
+  const medals = ['🥇','🥈','🥉'];
+  const rankNums = [2,1,3];
+  order.forEach((idx,pos)=>{
+    const d = top3[idx];
+    const el = document.getElementById(`podium-${rankNums[pos]}`);
+    if(!el||!d) return;
+    el.innerHTML = `
+      <div style="background:var(--card);border-radius:16px;border:1px solid var(--card-border);padding:16px 20px;margin-bottom:8px;min-width:140px;">
+        <div style="font-size:2rem;margin-bottom:4px;">${medals[pos]}</div>
+        <div style="font-weight:700;font-size:0.95rem;color:var(--text);">${d.name}</div>
+        <div style="font-size:0.8rem;color:var(--muted);">${d.city}</div>
+        <div style="font-size:1.3rem;font-weight:900;color:var(--red);font-family:'Playfair Display',serif;margin-top:6px;">${d.donations}</div>
+        <div style="font-size:0.7rem;color:var(--muted);">donations</div>
+      </div>
+      <div style="height:${heights[pos]};background:linear-gradient(to top,var(--red),var(--red-mid));border-radius:8px 8px 0 0;width:100%;opacity:${pos===1?1:0.6};"></div>`;
+  });
+  const el = document.getElementById('lb-list');
+  el.innerHTML = leaderboard.slice(3).map((d,i)=>`
+    <div class="lb-card">
+      <div class="lb-rank" style="color:var(--muted);">${i+4}</div>
+      <div class="lb-info"><div class="lb-name">${d.name}</div><div class="lb-city">${d.area}, ${d.city}</div><div class="badge-row">${donorBadges(d)}</div></div>
+      <div><div class="lb-donations">${d.donations} 🩸</div><div style="font-size:0.7rem;color:var(--muted);">${d.blood}</div></div>
+    </div>`).join('');
+}
+
+// ── CAMPS ──
+function renderCamps() {
+  const el = document.getElementById('camps-list');
+  if(!el) return;
+  el.innerHTML = camps.map(c=>`
+    <div class="camp-card">
+      <div class="camp-header">
+        <div class="camp-icon">${c.icon}</div>
+        <div><div class="camp-org">${c.org}</div><div class="camp-date">📅 ${c.date}</div></div>
+      </div>
+      <div class="camp-loc">⏰ ${c.time}</div>
+      <div class="camp-loc">📍 ${c.location}</div>
+      <div class="camp-loc" style="margin-top:6px;">🎯 Target: <strong>${c.target} donors</strong></div>
+      <span class="camp-tag">✓ Open for registration</span>
+      <div style="margin-top:12px;"><button class="btn btn-primary btn-sm" style="width:100%;" onclick="showToast('Registered for ${c.org} camp!','success')">Register to donate</button></div>
+    </div>`).join('');
+}
+
+// ── COMPATIBILITY TABLE ──
+function renderCompatTable() {
+  const groups = ['A+','A-','B+','B-','AB+','AB-','O+','O-'];
+  const compat = {
+    'A+': ['A+','AB+'],
+    'A-': ['A+','A-','AB+','AB-'],
+    'B+': ['B+','AB+'],
+    'B-': ['B+','B-','AB+','AB-'],
+    'AB+': ['AB+'],
+    'AB-': ['AB+','AB-'],
+    'O+': ['A+','B+','AB+','O+'],
+    'O-': ['A+','A-','B+','B-','AB+','AB-','O+','O-'],
+  };
+  const table = document.getElementById('compat-table');
+  if(!table) return;
+  table.innerHTML = `<thead><tr><th>Donor ↓ / Recipient →</th>${groups.map(g=>`<th>${g}</th>`).join('')}</tr></thead>
+  <tbody>${groups.map(donor=>`<tr><td class="bg-lbl">${donor}</td>${groups.map(rec=>`<td>${compat[donor].includes(rec)?'<span class="compat-yes">✓</span>':'<span class="compat-no">—</span>'}</td>`).join('')}</tr>`).join('')}</tbody>`;
+}
+
+// ── FORMS ──
+async function registerDonor() {
+  const fname=document.getElementById('d-fname').value.trim();
+  const lname=document.getElementById('d-lname').value.trim();
+  const phone=document.getElementById('d-phone').value.trim();
+  const city=document.getElementById('d-city').value;
+  const blood=document.querySelector('input[name="dblood"]:checked');
+  const terms=document.getElementById('d-terms').checked;
+  const alertEl=document.getElementById('donor-form-alert');
+  if(!fname||!lname||!phone||!city||!blood){alertEl.innerHTML=`<div class="alert alert-error">Please fill all required fields including blood group.</div>`;return;}
+  if(!terms){alertEl.innerHTML=`<div class="alert alert-error">Please agree to the terms.</div>`;return;}
+  try {
+    const res = await fetch(API_BASE + 'donors.php', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:`${fname} ${lname}`, blood:blood.value, city, area:document.getElementById('d-area').value, phone, dob:document.getElementById('d-dob').value})
+    });
+    const result = await res.json();
+    if(!result.success) throw new Error(result.error || 'Registration failed');
+    alertEl.innerHTML=`<div class="alert alert-success">✓ Registration successful! Welcome, ${fname}. Confirmation SMS sent.</div>`;
+    await loadDonors();
+    renderDonors(donors);
+    showToast(`🩸 Welcome, ${fname}! Your profile is now live.`,'success');
+    setTimeout(()=>showPage('search'),2000);
+  } catch(err) {
+    alertEl.innerHTML=`<div class="alert alert-error">Could not register: ${err.message}</div>`;
+  }
+}
+async function registerHospital() {
+  const name=document.getElementById('h-name').value.trim();
+  const reg=document.getElementById('h-reg').value.trim();
+  const type=document.getElementById('h-type').value;
+  const city=document.getElementById('h-city').value;
+  const phone=document.getElementById('h-phone').value.trim();
+  const terms=document.getElementById('h-terms').checked;
+  const alertEl=document.getElementById('hosp-form-alert');
+  if(!name||!reg||!city||!phone){alertEl.innerHTML=`<div class="alert alert-error">Please fill all required fields.</div>`;return;}
+  if(!terms){alertEl.innerHTML=`<div class="alert alert-error">Please agree to the terms.</div>`;return;}
+  try {
+    const res = await fetch(API_BASE + 'hospitals.php', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name, type, city, phone})
+    });
+    const result = await res.json();
+    if(!result.success) throw new Error(result.error || 'Registration failed');
+    alertEl.innerHTML=`<div class="alert alert-success">✓ Application submitted! Verification within 24–48 hours.</div>`;
+    showToast('Hospital registration submitted!','success');
+    setTimeout(()=>showPage('hospitals'),2500);
+  } catch(err) {
+    alertEl.innerHTML=`<div class="alert alert-error">Could not submit: ${err.message}</div>`;
+  }
+}
+async function postRequest() {
+  const patient=document.getElementById('req-patient').value.trim();
+  const blood=document.querySelector('input[name="rblood"]:checked');
+  const city=document.getElementById('req-city').value;
+  const phone=document.getElementById('req-phone').value.trim();
+  const location=document.getElementById('req-location').value.trim();
+  const alertEl=document.getElementById('req-modal-alert');
+  if(!patient||!blood||!city||!phone||!location){alertEl.innerHTML=`<div class="alert alert-error">Please fill all required fields.</div>`;return;}
+  const urgent=document.getElementById('req-urgent').checked;
+  const units=parseInt(document.getElementById('req-units').value)||1;
+  try {
+    const res = await fetch(API_BASE + 'requests.php', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({patient, blood:blood.value, location, hospital:location, units, urgent})
+    });
+    const result = await res.json();
+    if(!result.success) throw new Error(result.error || 'Could not post request');
+    await loadRequests();
+    renderHomeRequests();
+    closeModal('requestModal');
+    showToast(`Request posted! ${urgent?'🚨 Urgent':'📋'} ${blood.value} needed in ${city}. Donors notified via SMS & WhatsApp.`,'success');
+  } catch(err) {
+    alertEl.innerHTML=`<div class="alert alert-error">Could not post request: ${err.message}</div>`;
+  }
+}
+
+// ── CONTACT DONOR ──
+function contactDonor(id) {
+  const d=donors.find(x=>x.id===id);
+  if(!d) return;
+  document.getElementById('contactModalContent').innerHTML=`
+    <button class="modal-close" onclick="closeModal('contactModal')">×</button>
+    <div class="modal-title">${d.name}</div>
+    <div class="modal-sub">${d.blood} donor · ${d.area}, ${d.city}</div>
+    <div style="background:var(--bg);border-radius:12px;padding:1rem;margin:1rem 0;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:0.875rem;">
+        <div><div style="color:var(--muted);font-size:0.75rem;">Blood group</div><div style="font-weight:700;color:var(--red);font-size:1.2rem;">${d.blood}</div></div>
+        <div><div style="color:var(--muted);font-size:0.75rem;">Total donations</div><div style="font-weight:700;">${d.donations}</div></div>
+        <div><div style="color:var(--muted);font-size:0.75rem;">Last donated</div><div style="font-weight:600;">${formatDate(d.lastDon)}</div></div>
+        <div><div style="color:var(--muted);font-size:0.75rem;">Status</div><div style="color:${d.available?'var(--success)':'var(--muted)'};font-weight:600;">${d.available?'✓ Available':'Unavailable'}</div></div>
+      </div>
+      <div style="margin-top:10px;">${donorBadges(d)}</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button class="btn btn-primary btn-lg" onclick="showToast('Calling ${d.phone}…','success')">📞 Call ${d.phone}</button>
+      <button class="btn btn-outline btn-lg" onclick="whatsapp('${d.phone}','${d.blood}')">💬 WhatsApp ${d.name}</button>
+      <p style="font-size:0.78rem;color:var(--muted);text-align:center;">Please confirm donation at a registered hospital. JazakAllah Khair 🤲</p>
+    </div>`;
+  showModal('contactModal');
+}
+
+function whatsapp(phone,blood) {
+  showToast(`Opening WhatsApp for ${phone}…`,'success');
+}
+
+// ── ADMIN ──
+function adminTab(tab,link) {
+  if(link){document.querySelectorAll('.sidebar-link').forEach(l=>l.classList.remove('active'));link.classList.add('active');}
+  const el=document.getElementById('admin-main');
+  if(tab==='dashboard') {
+    el.innerHTML=`<h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.5rem;color:var(--text);">Admin dashboard</h2>
+    <div class="admin-grid">
+      <div class="admin-stat"><div class="admin-stat-val">${donors.length}</div><div class="admin-stat-lbl">Total donors</div><div class="admin-stat-change change-up">↑ +24 this week</div></div>
+      <div class="admin-stat"><div class="admin-stat-val">${hospitals.length}</div><div class="admin-stat-lbl">Hospitals</div><div class="admin-stat-change change-up">↑ +2 pending</div></div>
+      <div class="admin-stat"><div class="admin-stat-val">${bloodRequests.length}</div><div class="admin-stat-lbl">Active requests</div><div class="admin-stat-change change-dn">↓ 3 fulfilled today</div></div>
+      <div class="admin-stat"><div class="admin-stat-val">${camps.length}</div><div class="admin-stat-lbl">Blood camps</div><div class="admin-stat-change change-up">↑ All upcoming</div></div>
+    </div>
+    <div class="data-table"><div class="data-table-header"><div class="data-table-title">Recent activity</div></div>
+    <table><thead><tr><th>Event</th><th>User</th><th>City</th><th>Time</th><th>Status</th></tr></thead><tbody>
+      <tr><td>New donor registered</td><td>Kamran Shah</td><td>Lahore</td><td>2 min ago</td><td><span class="pill pill-green">Active</span></td></tr>
+      <tr><td>Blood request posted</td><td>PIMS Hospital</td><td>Islamabad</td><td>15 min ago</td><td><span class="pill pill-red">Urgent</span></td></tr>
+      <tr><td>Hospital registration</td><td>Red Crescent Islamabad</td><td>Islamabad</td><td>1 hr ago</td><td><span class="pill pill-yellow">Pending</span></td></tr>
+      <tr><td>Donation confirmed</td><td>Ahmed Raza → Iqbal</td><td>Lahore</td><td>2 hrs ago</td><td><span class="pill pill-green">Fulfilled</span></td></tr>
+    </tbody></table></div>`;
+  } else if(tab==='donors') {
+    el.innerHTML=`<h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.5rem;color:var(--text);">Donor management</h2>
+    <div class="data-table"><div class="data-table-header"><div class="data-table-title">All donors (${donors.length})</div><button class="btn btn-primary btn-sm" onclick="showPage('register-donor')">+ Add donor</button></div>
+    <table><thead><tr><th>Name</th><th>Blood</th><th>City</th><th>Donations</th><th>Badge</th><th>Status</th></tr></thead><tbody>
+    ${donors.map(d=>`<tr><td>${d.name}</td><td><strong style="color:var(--red);">${d.blood}</strong></td><td>${d.city}</td><td>${d.donations}</td><td>${donorBadges(d)}</td><td><span class="pill ${d.available?'pill-green':'pill-yellow'}">${d.available?'Available':'Unavailable'}</span></td></tr>`).join('')}
+    </tbody></table></div>`;
+  } else if(tab==='hospitals') {
+    el.innerHTML=`<h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.5rem;color:var(--text);">Hospital verification</h2>
+    <div class="data-table"><div class="data-table-header"><div class="data-table-title">All hospitals</div></div>
+    <table><thead><tr><th>Hospital</th><th>City</th><th>Type</th><th>Status</th><th>Action</th></tr></thead><tbody>
+    ${hospitals.map(h=>`<tr><td>${h.name}</td><td>${h.city}</td><td>${h.type}</td><td><span class="pill ${h.verified?'pill-green':'pill-yellow'}">${h.verified?'Verified':'Pending'}</span></td><td>${!h.verified?`<button class="btn btn-sm" style="background:var(--success-bg);color:var(--success);border:none;cursor:pointer;" onclick="showToast('${h.name} verified!','success')">✓ Verify</button>`:''}</td></tr>`).join('')}
+    </tbody></table></div>`;
+  } else if(tab==='requests') {
+    el.innerHTML=`<h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.5rem;color:var(--text);">Blood requests</h2>
+    <div class="data-table"><div class="data-table-header"><div class="data-table-title">All requests (${bloodRequests.length})</div></div>
+    <table><thead><tr><th>Patient</th><th>Blood</th><th>Location</th><th>Units</th><th>Priority</th><th>Time</th></tr></thead><tbody>
+    ${bloodRequests.map(r=>`<tr><td>${r.patient}</td><td><strong style="color:var(--red);">${r.blood}</strong></td><td>${r.location}</td><td>${r.units}</td><td><span class="pill ${r.urgent?'pill-red':'pill-green'}">${r.urgent?'Urgent':'Normal'}</span></td><td>${r.time}</td></tr>`).join('')}
+    </tbody></table></div>`;
+  } else if(tab==='camps') {
+    el.innerHTML=`<h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.5rem;color:var(--text);">Blood camps (${camps.length})</h2>
+    <div class="data-table"><div class="data-table-header"><div class="data-table-title">Upcoming camps</div><button class="btn btn-primary btn-sm" onclick="showToast('Add camp (coming soon)','success')">+ Add camp</button></div>
+    <table><thead><tr><th>Organisation</th><th>City</th><th>Date</th><th>Target</th><th>Status</th></tr></thead><tbody>
+    ${camps.map(c=>`<tr><td>${c.org}</td><td>${c.city}</td><td>${c.date}</td><td>${c.target} donors</td><td><span class="pill pill-green">Open</span></td></tr>`).join('')}
+    </tbody></table></div>`;
+  } else if(tab==='cities') {
+    el.innerHTML=`<h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.5rem;color:var(--text);">Cities & areas</h2>
+    <div class="data-table"><div class="data-table-header"><div class="data-table-title">Covered cities</div><button class="btn btn-primary btn-sm" onclick="showToast('Add city','success')">+ Add city</button></div>
+    <table><thead><tr><th>City</th><th>Province</th><th>Donors</th><th>Hospitals</th><th>Camps</th></tr></thead><tbody>
+      <tr><td>Lahore</td><td>Punjab</td><td>4</td><td>2</td><td>2</td></tr>
+      <tr><td>Karachi</td><td>Sindh</td><td>3</td><td>3</td><td>2</td></tr>
+      <tr><td>Islamabad</td><td>ICT</td><td>2</td><td>2</td><td>1</td></tr>
+      <tr><td>Rawalpindi</td><td>Punjab</td><td>1</td><td>1</td><td>1</td></tr>
+      <tr><td>Multan</td><td>Punjab</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>Peshawar</td><td>KPK</td><td>1</td><td>0</td><td>0</td></tr>
+    </tbody></table></div>`;
+  }
+}
+
+// ── MODAL ──
+function showModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')}));
+
+// ── TOAST ──
+function showToast(msg,type='success'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className=`toast ${type} show`;
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// ── UTILS ──
+function formatDate(str){
+  if(!str||str==='N/A'||str==='') return 'N/A';
+  try{return new Date(str).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}catch{return str}
+}
+
+// ── INIT ──
+createDrops();
+loadAllData();
+animateCounter('cnt1',12400,'+');
+animateCounter('cnt2',8200,'+');
+animateCounter('cnt3',180,'+');
+animateCounter('cnt4',32,'');
+</script>
+</body>
+</html>
